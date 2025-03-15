@@ -1,3 +1,5 @@
+package org.example.pomodoroapplication;
+
 public class Pomodoro {
 
     private int pomodoroTime;
