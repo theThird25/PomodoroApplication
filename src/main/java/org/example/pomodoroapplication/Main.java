@@ -17,6 +17,7 @@ public class Main extends Application {
         String css = Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/PomoductiveLogo.png"))));
         stage.setTitle("Pomoductive");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
