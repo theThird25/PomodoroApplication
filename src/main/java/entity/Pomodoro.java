@@ -1,4 +1,4 @@
-package org.example.pomodoroapplication;
+package entity;
 
 public class Pomodoro {
 
