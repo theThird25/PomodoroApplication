@@ -37,7 +37,7 @@
             </ToggleButton>
          </children>
       </HBox>
-      <Button id="timerButton" alignment="TOP_CENTER" centerShape="false" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="151.0" layoutY="198.0" mnemonicParsing="false" onAction="#startTime" prefHeight="207.0" prefWidth="195.0" style="-fx-background-radius: 50%; -fx-background-color: EDA29F; -fx-font-weight: bold;" text="25:00">
+      <Button id="timerButton" alignment="TOP_CENTER" centerShape="false" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="151.0" layoutY="198.0" mnemonicParsing="false" onAction="#startTime" prefHeight="207.0" prefWidth="195.0" style="-fx-background-radius: 50%; -fx-background-color: EDA29F; -fx-font-weight: bold;" text="Start Timer">
          <font>
             <Font size="50.0" />
          </font>

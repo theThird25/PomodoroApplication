@@ -12,11 +12,16 @@ public class MainController {
     private Button timerButton;
 
     private int timeRemaining = 25 * 60; // 25 minutes in seconds
+
     private Timeline timeline;
 
     @FXML
     public void initialize() {
-        updateTimerDisplay();
+        if (timerButton == null) {
+            System.out.println("timerButton is null! Check FXML file.");
+        } else {
+            timerButton.setText("Start Timer");
+        }
     }
 
     @FXML // ✅ Must be annotated to be accessible from FXML
@@ -39,5 +44,6 @@ public class MainController {
         int minutes = timeRemaining / 60;
         int seconds = timeRemaining % 60;
         timerButton.setText(String.format("%02d:%02d", minutes, seconds)); // Format to MM:SS
+
     }
 }
