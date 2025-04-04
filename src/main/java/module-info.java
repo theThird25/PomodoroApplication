@@ -11,8 +11,8 @@ module org.example.pomodoroapplication {
 
     opens org.example.pomodoroapplication to javafx.fxml;
     exports org.example.pomodoroapplication;
-    exports controller;
     opens controller to javafx.fxml;
     exports entity;
     opens entity to javafx.fxml;
+    exports controller;
 }

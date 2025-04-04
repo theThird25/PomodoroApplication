@@ -12,7 +12,6 @@ public class MainController {
     private Button timerButton;
 
     private int timeRemaining = 25 * 60; // 25 minutes in seconds
-
     private Timeline timeline;
 
     @FXML
@@ -20,19 +19,20 @@ public class MainController {
         if (timerButton == null) {
             System.out.println("timerButton is null! Check FXML file.");
         } else {
-            timerButton.setText("Start Timer");
+            updateTimerDisplay(); // Set "25:00" as the initial text
         }
     }
 
-    @FXML // ✅ Must be annotated to be accessible from FXML
-    public void startTime() { // ✅ Match the FXML onAction method
-        if (timeline == null || !timeline.getStatus().equals(Timeline.Status.RUNNING)) {
+    @FXML
+    public void startTime() {
+        if (timeline == null || timeline.getStatus() != Timeline.Status.RUNNING) {
             timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 if (timeRemaining > 0) {
                     timeRemaining--;
                     updateTimerDisplay();
                 } else {
-                    timeline.stop(); // Stop when reaching 0
+                    timeline.stop();
+                    timerButton.setText("Done!");
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -43,7 +43,6 @@ public class MainController {
     private void updateTimerDisplay() {
         int minutes = timeRemaining / 60;
         int seconds = timeRemaining % 60;
-        timerButton.setText(String.format("%02d:%02d", minutes, seconds)); // Format to MM:SS
-
+        timerButton.setText(String.format("%02d:%02d", minutes, seconds));
     }
 }
