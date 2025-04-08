@@ -8,6 +8,8 @@ module org.example.pomodoroapplication {
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires javafx.media;
+    requires java.desktop;
 
     opens org.example.pomodoroapplication to javafx.fxml;
     exports org.example.pomodoroapplication;
