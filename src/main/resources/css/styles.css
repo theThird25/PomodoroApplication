@@ -16,3 +16,16 @@
 .custom-button:hover {
     -fx-background-color: #45A049;
 }
+
+#timerButton {
+    -fx-font-size: 25px;
+    -fx-font-family: "Sitka Text";
+    -fx-font-weight: bold;
+    -fx-background-color: #EDA29F;
+}
+
+#timerButton:hover {
+    -fx-font-size: 25px; /* Prevent size shrinking */
+    -fx-font-family: "Sitka Text";
+    -fx-font-weight: bold;
+}

@@ -7,40 +7,28 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: C7EAE4;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: C7EAE4;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ShortBreakController">
    <children>
+      <!-- Circle for styling -->
       <Circle fill="DODGERBLUE" layoutX="249.0" layoutY="302.0" radius="127.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" style="-fx-fill: #CBC4B7;" />
-      <Circle fill="DODGERBLUE" layoutX="248.0" layoutY="301.0" radius="110.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" style="-fx-fill: EDA29F;" />
+      <Circle fill="DODGERBLUE" layoutX="248.0" layoutY="301.0" radius="110.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" style="-fx-fill: #EDA29F;" />
+
+      <!-- Title Label -->
       <Label layoutX="138.0" layoutY="35.0" prefHeight="58.0" prefWidth="244.0" text="Pomoductive">
          <font>
             <Font name="Bell MT" size="40.0" />
          </font>
       </Label>
-      <HBox layoutX="79.0" layoutY="100.0" prefHeight="40.0" prefWidth="339.0">
-         <children>
-            <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="118.0" text="Focus">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="118.0" text="Short Break">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </ToggleButton>
-            <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="118.0" text="Long Break">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </ToggleButton>
-         </children>
-      </HBox>
-      <Label fx:id="timerLabel" alignment="CENTER" layoutX="151.0" layoutY="220.0" prefHeight="80.0" prefWidth="195.0" style="-fx-font-weight: bold;" text="25:00">
+
+      <!-- Timer Display Label (ID: breakTimerLabel) -->
+      <Label fx:id="breakTimerLabel" alignment="CENTER" layoutX="151.0" layoutY="220.0" prefHeight="80.0" prefWidth="195.0" style="-fx-font-weight: bold;" text="05:00">
          <font>
             <Font size="50.0" />
          </font>
       </Label>
-      <Button fx:id="timerButton" alignment="CENTER" layoutX="180.0" layoutY="310.0" mnemonicParsing="false" onAction="#startTimer" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: EDA29F; -fx-font-weight: bold;" text="START">
+
+      <!-- Start/Pause Button (ID: startBreakButton) -->
+      <Button fx:id="startBreakButton" alignment="CENTER" layoutX="180.0" layoutY="310.0" mnemonicParsing="false" onAction="#startBreak" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: #EDA29F; -fx-font-weight: bold;" text="START">
          <font>
             <Font name="Sitka Text" size="25.0" />
          </font>
