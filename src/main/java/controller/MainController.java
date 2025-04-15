@@ -35,9 +35,13 @@ public class MainController {
         } else {
             updateTimerDisplay(); // Set "25:00" as the initial text
         }
+
     }
 
+    public void setPomodoro(Pomodoro pomodoro) {
+        this.pomodoro = pomodoro;
 
+    }
 
     private void playAlarm() {
         AudioClip alarm = new AudioClip(getClass().getResource("/Sounds/Ding.wav").toString());
@@ -54,18 +58,26 @@ public class MainController {
                     updateTimerDisplay();
                 } else {
                     timeline.stop();
-                    timerButton.setText("START"); // Reset label when done
+                    timerButton.setText("Done"); // Reset label when done
                     playAlarm();
+
+                    SceneController.switchFocus(
+                            new ActionEvent(timerButton, null),
+                            "/org/example/pomodoroapplication/shortBreakTime.fxml",
+                            pomodoro,
+                            300,
+                            true// ✅ autoStart enabled from auto transition
+                    );
 
                 }
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-            timerButton.setText("PAUSE"); // <<< change to PAUSE
+            timerButton.setText("Pause"); // <<< change to PAUSE
         } else {
             // Pause the timer
             timeline.stop();
-            timerButton.setText("START"); // <<< change back to START
+            timerButton.setText("Resume"); // <<< change back to START
         }
 
     }
@@ -88,7 +100,7 @@ public class MainController {
 
     @FXML
     public void switchToBreak(ActionEvent event) {
-        SceneController.switchScene(event, "/org/example/pomodoroapplication/shortBreakTime.fxml", pomodoro, 300);
+        SceneController.switchScene(event, "/org/example/pomodoroapplication/shortBreakTime.fxml", pomodoro, 300,false);
     }
 
     private void updateTimerDisplay() {
