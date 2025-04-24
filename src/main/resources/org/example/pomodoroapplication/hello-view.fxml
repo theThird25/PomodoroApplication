@@ -29,7 +29,7 @@
                   <Font size="15.0" />
                </font>
             </ToggleButton>
-            <ToggleButton mnemonicParsing="false" prefHeight="62.0" prefWidth="118.0" text="Long Break">
+            <ToggleButton mnemonicParsing="false" onAction="#switchToLongBreak" prefHeight="62.0" prefWidth="118.0" text="Long Break">
                <font>
                   <Font size="15.0" />
                </font>

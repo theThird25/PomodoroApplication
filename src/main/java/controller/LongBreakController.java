@@ -9,15 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-public class ShortBreakController {
+public class LongBreakController {
+    @FXML
+    private Label breakLongTimerLabel;
 
     @FXML
-    private Label breakTimerLabel;
+    private Button startLongBreakButton;
 
-    @FXML
-    private Button startBreakButton;
-
-    private int breakTimeRemaining = 300;
+    private int breakTimeRemaining = 900;
     private Timeline breakTimeline;
     private Pomodoro pomodoro; // ✅ Add this line to hold the Pomodoro object
 
@@ -33,12 +32,12 @@ public class ShortBreakController {
         updateBreakDisplay();
 
         if (autoStart) {
-            startBreak(); // ✅ Only start if told to
+            startLongBreak(); // ✅ Only start if told to
         }
     }
 
     @FXML
-    public void startBreak() {
+    public void startLongBreak() {
         if (breakTimeline == null || breakTimeline.getStatus() != Timeline.Status.RUNNING) {
             breakTimeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
                 if (breakTimeRemaining > 0) {
@@ -46,30 +45,31 @@ public class ShortBreakController {
                     updateBreakDisplay();
                 } else {
                     breakTimeline.stop();
-                    startBreakButton.setText("Break Done!");
+                    startLongBreakButton.setText("Break Done!");
                 }
             }));
             breakTimeline.setCycleCount(Timeline.INDEFINITE);
             breakTimeline.play();
-            startBreakButton.setText("Pause");
+            startLongBreakButton.setText("Pause");
         } else {
             breakTimeline.stop();
-            startBreakButton.setText("Resume");
+            startLongBreakButton.setText("Resume");
         }
     }
 
     private void updateBreakDisplay() {
         int minutes = breakTimeRemaining / 60;
         int seconds = breakTimeRemaining % 60;
-        breakTimerLabel.setText(String.format("%02d:%02d", minutes, seconds));
+        breakLongTimerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
     @FXML
     public void switchToFocus(ActionEvent event) {
-        SceneController.switchFocus(event, "/org/example/pomodoroapplication/hello-view.fxml", pomodoro, 300,true);
+        SceneController.switchFocus(event, "/org/example/pomodoroapplication/hello-view.fxml", pomodoro, 900,false);
     }
 
-    public void switchToLongBreak(ActionEvent event) {
-        SceneController.switchScene(event, "/org/example/pomodoroapplication/longBreakTime.fxml", pomodoro, 600,false);
+    @FXML
+    public void switchToBreak(ActionEvent event) {
+        SceneController.switchScene(event, "/org/example/pomodoroapplication/shortBreakTime.fxml", pomodoro, 300,false);
     }
 }

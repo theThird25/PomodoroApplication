@@ -98,10 +98,7 @@ public class MainController {
         isRunning = false;
     }
 
-    @FXML
-    public void switchToBreak(ActionEvent event) {
-        SceneController.switchScene(event, "/org/example/pomodoroapplication/shortBreakTime.fxml", pomodoro, 300,false);
-    }
+
 
     private void updateTimerDisplay() {
         int minutes = timeRemaining / 60;
@@ -109,5 +106,13 @@ public class MainController {
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
 
+    @FXML
+    public void switchToBreak(ActionEvent event) {
+        SceneController.switchScene(event, "/org/example/pomodoroapplication/shortBreakTime.fxml", pomodoro, 300,false);
+    }
+
+    public void switchToLongBreak(ActionEvent event) {
+        SceneController.switchScene(event, "/org/example/pomodoroapplication/longBreakTime.fxml", pomodoro, 600,false);
+    }
 
 }
