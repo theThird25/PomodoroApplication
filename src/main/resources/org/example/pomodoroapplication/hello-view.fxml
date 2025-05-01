@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Circle?>
@@ -46,5 +48,15 @@
             <Font name="Sitka Text" size="25.0" />
          </font>
       </Button>
+      <Button fx:id="resetButton" layoutX="223.0" layoutY="216.0" mnemonicParsing="false" onAction="#resetTimer" style="-fx-background-color: transparent; -fx-border-color: transparent;" visible="false">
+         <graphic>
+               <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../images/reset.png" />
+                  </image>
+               </ImageView>
+         </graphic>
+      </Button>
+
    </children>
 </AnchorPane>

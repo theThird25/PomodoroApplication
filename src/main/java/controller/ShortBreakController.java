@@ -17,9 +17,13 @@ public class ShortBreakController {
     @FXML
     private Button startBreakButton;
 
+    @FXML
+    private Button resetButtonShort;
+
     private int breakTimeRemaining = 300;
     private Timeline breakTimeline;
     private Pomodoro pomodoro; // ✅ Add this line to hold the Pomodoro object
+    private boolean isRunning = false;
 
     @FXML
     public void initialize() {
@@ -51,11 +55,31 @@ public class ShortBreakController {
             }));
             breakTimeline.setCycleCount(Timeline.INDEFINITE);
             breakTimeline.play();
-            startBreakButton.setText("Pause");
+            startBreakButton.setText("PAUSE");
+            resetButtonShort.setVisible(false);
         } else {
             breakTimeline.stop();
-            startBreakButton.setText("Resume");
+            startBreakButton.setText("RESUME");
+            resetButtonShort.setVisible(true);
         }
+    }
+
+    @FXML
+    private void resetTimerShort(ActionEvent event) {
+        // Stop the timer if running
+        if (breakTimeline != null) {
+            breakTimeline.stop();
+        }
+        // Reset the timeRemaining back to 10 seconds
+        breakTimeRemaining = 300;
+        // Update the label display
+        updateBreakDisplay();
+        // Change the timer button text back to "START"
+        startBreakButton.setText("START");
+        // Hide the reset button again
+        resetButtonShort.setVisible(false);
+        // Set running state to false
+        isRunning = false;
     }
 
     private void updateBreakDisplay() {

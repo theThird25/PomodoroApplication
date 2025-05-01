@@ -18,6 +18,9 @@ public class MainController {
     @FXML
     private Button timerButton;
 
+    @FXML
+    private Button resetButton;
+
 
 
     private int timeRemaining = 10; // 25 minutes in seconds 25 * 60
@@ -48,6 +51,8 @@ public class MainController {
         alarm.play();
     }
 
+
+
     @FXML
     public void startTimer() {
         if (timeline == null || !timeline.getStatus().equals(Timeline.Status.RUNNING)) {
@@ -73,11 +78,13 @@ public class MainController {
             }));
             timeline.setCycleCount(Timeline.INDEFINITE);
             timeline.play();
-            timerButton.setText("Pause"); // <<< change to PAUSE
+            timerButton.setText("PAUSE"); // <<< change to PAUSE
+            resetButton.setVisible(false);
         } else {
             // Pause the timer
             timeline.stop();
-            timerButton.setText("Resume"); // <<< change back to START
+            timerButton.setText("RESUME");
+            resetButton.setVisible(true);// <<< change back to START
         }
 
     }
@@ -89,12 +96,20 @@ public class MainController {
     }
 
     @FXML
-    public void resetTime(ActionEvent event) {
+    private void resetTimer(ActionEvent event) {
+        // Stop the timer if running
         if (timeline != null) {
             timeline.stop();
         }
-        pomodoro.setSeconds(INITIAL_TIME);
+        // Reset the timeRemaining back to 10 seconds
+        timeRemaining = 10;
+        // Update the label display
+        updateTimerDisplay();
+        // Change the timer button text back to "START"
         timerButton.setText("START");
+        // Hide the reset button again
+        resetButton.setVisible(false);
+        // Set running state to false
         isRunning = false;
     }
 
@@ -105,6 +120,8 @@ public class MainController {
         int seconds = timeRemaining % 60;
         timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
     }
+
+
 
     @FXML
     public void switchToBreak(ActionEvent event) {
