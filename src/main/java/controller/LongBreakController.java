@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
@@ -16,7 +17,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShortBreakController {
+public class LongBreakController {
 
     private static final int FOCUS_TIME = 25 * 60;    // 25 minutes
     private static final int SHORT_BREAK = 5 * 60;    // 5 minutes
@@ -29,7 +30,7 @@ public class ShortBreakController {
     private Button startBreakButton;
 
     @FXML
-    private ToggleButton shortBreakButton;
+    private ToggleButton longBreakButton;
 
     // Task List Components
     @FXML
@@ -52,13 +53,13 @@ public class ShortBreakController {
 
     @FXML
     public void initialize() {
-        shortBreakButton.setSelected(true);
+        longBreakButton.setSelected(true);
         // Initialize task list
         tasks = javafx.collections.FXCollections.observableArrayList();
         taskListView.setItems(tasks);
 
         // Set up the cell factory for task items with a callback
-        taskListView.setCellFactory(param -> new TaskCell(task -> {
+        taskListView.setCellFactory(param -> new view.TaskCell(task -> {
             // This is our callback that will be executed when a task's completion status changes
             saveTasks();
             updateCounter();
@@ -72,16 +73,16 @@ public class ShortBreakController {
 
     public void initializeData(Pomodoro pomodoro, int breakSeconds, boolean autoStart) {
         this.pomodoro = pomodoro;
-        this.timeRemaining = breakSeconds > 0 ? breakSeconds : SHORT_BREAK;
+        this.timeRemaining = breakSeconds > 0 ? breakSeconds : LONG_BREAK;
         updateTimerDisplay();
 
         if (autoStart) {
-            startBreak(null);
+            startLongBreak(null);
         }
     }
 
     @FXML
-    public void startBreak(ActionEvent event) {
+    public void startLongBreak(ActionEvent event) {
         if (timeline == null || timeline.getStatus() != Timeline.Status.RUNNING) {
             startTimeline();
             startBreakButton.setText("PAUSE");
@@ -102,7 +103,7 @@ public class ShortBreakController {
                     } else {
                         breakComplete();
                     }
-                }) // ✅ Correct closing here
+                }) // ✅ Properly closed here
         );
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
@@ -113,6 +114,7 @@ public class ShortBreakController {
         startBreakButton.setText("DONE");
         playAlarm();
 
+        // Return to focus mode
         SceneController.switchScene(
                 new ActionEvent(startBreakButton, null),
                 "hello-view.fxml",
@@ -199,7 +201,7 @@ public class ShortBreakController {
         }
     }
 
-    // Remove a task
+    // Remove a tasks
     @FXML
     public void removeSelectedTask(ActionEvent event) {
         Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
