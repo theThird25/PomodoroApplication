@@ -2,6 +2,7 @@ package controller;
 
 import entity.Pomodoro;
 import entity.Task;
+import javafx.collections.FXCollections;
 import view.TaskCell;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -51,21 +52,19 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        // Initialize task list
-        tasks = javafx.collections.FXCollections.observableArrayList();
+        tasks = FXCollections.observableArrayList();
         taskListView.setItems(tasks);
 
-        // Set up the cell factory for task items with a callback
         taskListView.setCellFactory(param -> new TaskCell(task -> {
-            // This is our callback that will be executed when a task's completion status changes
-            saveTasks();
-            updateCounter();
+            saveTasks();       // Save when checkbox changes
+            updateCounter();   // Update counter display
         }));
 
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        updateTimerDisplay();
+        // 4. Load saved tasks and update display
         loadTasks();
+        updateTimerDisplay();
     }
 
     public void setPomodoro(Pomodoro pomodoro) {
@@ -186,7 +185,6 @@ public class MainController {
     public void addTask(ActionEvent event) {
         String taskText = taskInput.getText().trim();
         if(!taskText.isEmpty()) {
-            // Create task with text that will be used as both text and description
             Task newTask = new Task(taskText, false);
             tasks.add(newTask);
             taskInput.clear();
@@ -196,32 +194,35 @@ public class MainController {
         }
     }
 
-    // Remove a task
+    // Remove checked tasks
     @FXML
     public void removeSelectedTask(ActionEvent event) {
-        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTask != null) {
-            tasks.remove(selectedTask);
-            saveTasks();
-            updateCounter();
-        } else {
-            showAlert("Please select a task to remove.");
-        }
-    }
-
-    // Clears all completed tasks
-    @FXML
-    public void clearCompletedTasks(ActionEvent event) {
-        List<Task> completedTasks = tasks.stream()
+        List<Task> checkedTasks = tasks.stream()
                 .filter(Task::isCompleted)
                 .toList();
 
-        if (!completedTasks.isEmpty()) {
-            tasks.removeAll(completedTasks);
+        if (!checkedTasks.isEmpty()) {
+            tasks.removeAll(checkedTasks);
             saveTasks();
             updateCounter();
         } else {
-            showAlert("No completed tasks to clear.");
+            showAlert("Please check the task you want to remove.");
+        }
+    }
+
+    // Clear completed tasks
+    @FXML
+    public void clearCompletedTasks(ActionEvent event) {
+        List<Task> checkedTasks = tasks.stream()
+                .filter(Task::isCompleted)
+                .toList();
+
+        if (!checkedTasks.isEmpty()) {
+            tasks.removeAll(checkedTasks);
+            saveTasks();
+            updateCounter();
+        } else {
+            showAlert("Please check the task you want to remove.");
         }
     }
 

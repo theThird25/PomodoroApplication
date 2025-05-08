@@ -11,6 +11,7 @@ public class TaskCell extends ListCell<Task> {
     private final CheckBox checkBox = new CheckBox();
     private Task currentTask;
     private final TaskCellCallback callback;
+    private boolean isNewlyAdded = false;
 
     public interface TaskCellCallback {
         void onTaskCompletionChanged(Task task);
@@ -29,6 +30,11 @@ public class TaskCell extends ListCell<Task> {
         });
     }
 
+    public void markAsNewlyAdded() {
+        isNewlyAdded = true;
+        updateItem(getItem(), isEmpty());
+    }
+
     @Override
     protected void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
@@ -43,17 +49,14 @@ public class TaskCell extends ListCell<Task> {
             currentTask = task;
             checkBox.setSelected(task.isCompleted());
 
-            HBox hbox = new HBox(5);
+            HBox hbox = new HBox(20);
             hbox.getChildren().add(checkBox);
 
             Label label = new Label(task.getDescription());
             label.setStyle("-fx-font-size: 14px;");
 
-            if (task.isCompleted()) {
-                label.setStyle("-fx-strikethrough: true; -fx-font-size: 14px;");
-            } else {
-                label.setStyle("-fx-font-size: 14px;");
-            }
+            // Add padding to entire cell content
+            hbox.setPadding(new javafx.geometry.Insets(5, 10, 5, 10));
 
             hbox.getChildren().add(label);
             setGraphic(hbox);

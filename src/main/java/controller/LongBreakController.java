@@ -2,6 +2,7 @@ package controller;
 
 import entity.Pomodoro;
 import entity.Task;
+import javafx.collections.FXCollections;
 import view.TaskCell;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -9,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.media.AudioClip;
 import javafx.util.Duration;
 
@@ -46,29 +46,27 @@ public class LongBreakController {
     private ObservableList<Task> tasks;
     private String taskFilePath = "tasks.dat";
 
-    private Pomodoro pomodoro;
-    private int timeRemaining;
+    // Time Variables
+    private int timeRemaining = FOCUS_TIME;
     private Timeline timeline;
+    private Pomodoro pomodoro;
     private boolean isRunning = false;
 
     @FXML
     public void initialize() {
-        longBreakButton.setSelected(true);
-        // Initialize task list
-        tasks = javafx.collections.FXCollections.observableArrayList();
+        tasks = FXCollections.observableArrayList();
         taskListView.setItems(tasks);
 
-        // Set up the cell factory for task items with a callback
-        taskListView.setCellFactory(param -> new view.TaskCell(task -> {
-            // This is our callback that will be executed when a task's completion status changes
-            saveTasks();
-            updateCounter();
+        taskListView.setCellFactory(param -> new TaskCell(task -> {
+            saveTasks();       // Save when checkbox changes
+            updateCounter();   // Update counter display
         }));
 
         taskListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        updateTimerDisplay();
+        // 4. Load saved tasks and update display
         loadTasks();
+        updateTimerDisplay();
     }
 
     public void initializeData(Pomodoro pomodoro, int breakSeconds, boolean autoStart) {
@@ -201,32 +199,35 @@ public class LongBreakController {
         }
     }
 
-    // Remove a tasks
+    // Remove checked tasks
     @FXML
     public void removeSelectedTask(ActionEvent event) {
-        Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
-        if (selectedTask != null) {
-            tasks.remove(selectedTask);
-            saveTasks();
-            updateCounter();
-        } else {
-            showAlert("Please select a task to remove.");
-        }
-    }
-
-    // Clears all completed tasks
-    @FXML
-    public void clearCompletedTasks(ActionEvent event) {
-        List<Task> completedTasks = tasks.stream()
+        List<Task> checkedTasks = tasks.stream()
                 .filter(Task::isCompleted)
                 .toList();
 
-        if (!completedTasks.isEmpty()) {
-            tasks.removeAll(completedTasks);
+        if (!checkedTasks.isEmpty()) {
+            tasks.removeAll(checkedTasks);
             saveTasks();
             updateCounter();
         } else {
-            showAlert("No completed tasks to clear.");
+            showAlert("Please check the boxes of tasks you want to remove.");
+        }
+    }
+
+    // Clear completed tasks (same implementation now)
+    @FXML
+    public void clearCompletedTasks(ActionEvent event) {
+        List<Task> checkedTasks = tasks.stream()
+                .filter(Task::isCompleted)
+                .toList();
+
+        if (!checkedTasks.isEmpty()) {
+            tasks.removeAll(checkedTasks);
+            saveTasks();
+            updateCounter();
+        } else {
+            showAlert("Please check the boxes of tasks you want to remove.");
         }
     }
 
